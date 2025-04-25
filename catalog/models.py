@@ -28,9 +28,7 @@ class Product(models.Model):
         help_text="Введите категорию товара",
         related_name="products",
     )
-    purchase_price = models.DecimalField(
-        max_digits=None,
-        decimal_places=2,
+    purchase_price = models.FloatField(
         verbose_name="Цена",
         help_text="Введите цену товара",
     )
