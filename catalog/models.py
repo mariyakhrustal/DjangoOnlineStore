@@ -28,7 +28,7 @@ class Product(models.Model):
         help_text="Введите категорию товара",
         related_name="products",
     )
-    purchase_price = models.FloatField(
+    price = models.FloatField(
         verbose_name="Цена",
         help_text="Введите цену товара",
     )

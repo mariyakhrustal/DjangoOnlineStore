@@ -8,5 +8,5 @@ urlpatterns = [
     path("", include("catalog.urls", namespace="catalog")),
 ]
 
-if settings.DEBAG:
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_rood=settings.MEDIA_ROOT)
