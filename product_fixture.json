@@ -1,0 +1,67 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 24,
+    "fields": {
+        "name": "Ананас",
+        "description": "яркий, кисло-сладкий, сочный",
+        "image": "",
+        "category": 9,
+        "price": 200.0,
+        "created_at": "2025-04-26T06:44:05.540Z",
+        "updated_at": "2025-04-26T06:44:05.540Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 25,
+    "fields": {
+        "name": "Яблоко",
+        "description": "сочное, сладкое, освежающее",
+        "image": "",
+        "category": 9,
+        "price": 300.0,
+        "created_at": "2025-04-26T06:44:14.092Z",
+        "updated_at": "2025-04-26T06:44:14.092Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 26,
+    "fields": {
+        "name": "Помидор",
+        "description": "мясистый, сочный, кисло-сладкий",
+        "image": "",
+        "category": 10,
+        "price": 400.0,
+        "created_at": "2025-04-26T06:44:22.293Z",
+        "updated_at": "2025-04-26T06:44:22.293Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 27,
+    "fields": {
+        "name": "Кабачок",
+        "description": "нежный, нейтральный, диетический",
+        "image": "",
+        "category": 10,
+        "price": 500.0,
+        "created_at": "2025-04-26T06:44:33.757Z",
+        "updated_at": "2025-04-26T06:44:33.757Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 28,
+    "fields": {
+        "name": "Свекла",
+        "description": "сладкая, плотная, яркая",
+        "image": "",
+        "category": 10,
+        "price": 600.0,
+        "created_at": "2025-04-26T06:44:44.760Z",
+        "updated_at": "2025-04-26T06:44:44.760Z"
+    }
+}
+]
