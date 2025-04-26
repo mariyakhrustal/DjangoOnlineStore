@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, Contacts
 
 
 # Register your models here.
@@ -22,4 +22,16 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = (
         "name",
         "description",
+    )
+
+
+@admin.register(Contacts)
+class ContactsAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+    )
+    search_fields = (
+        "name",
+        "message",
     )

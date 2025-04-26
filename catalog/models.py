@@ -64,3 +64,29 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contacts(models.Model):
+    name = models.CharField(
+        max_length=150,
+        verbose_name="Имя",
+        help_text="Введите имя",
+    )
+    phone = models.CharField(
+        max_length=30,
+        verbose_name="Контактный телефон",
+        help_text="Введите контактный телефон",
+    )
+    message = models.TextField(
+        verbose_name="Сообщение",
+        null=True,
+        blank=True,
+        help_text="Введите ваше сообщение",
+    )
+
+    class Meta:
+        verbose_name = "Контакт"
+        verbose_name_plural = "Контакты"
+
+    def __str__(self):
+        return f"Контакт: {self.name}"
