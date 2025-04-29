@@ -101,6 +101,14 @@
                     <li><a class="text-muted" href="/contacts/">Контакты</a></li>
                 </ul>
             </div>
+            <div class="col-6 col-md">
+                <h5>Последние обращения:</h5>
+                <ul class="list-unstyled text-small">
+                    {% for contact in contacts %}
+                    <li><strong>{{ contact.name }}</strong>: {{ contact.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </footer>
 </div>
