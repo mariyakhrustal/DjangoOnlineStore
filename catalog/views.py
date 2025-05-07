@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from catalog.models import Product, Contacts
@@ -5,12 +6,15 @@ from catalog.models import Product, Contacts
 
 # Create your views here.
 def home(request):
+    all_products = Product.objects.order_by('-id')
+    paginator = Paginator(all_products, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     last_products = Product.objects.order_by("-id")[:5]
-    all_products = Product.objects.all()
-    context = {"products": all_products}
     print("Последние 5 созданных продуктов:")
     for product in last_products:
         print(f"{product.name}")
+    context = {"products": page_obj}
     return render(request, "catalog/home.html", context)
 
 
