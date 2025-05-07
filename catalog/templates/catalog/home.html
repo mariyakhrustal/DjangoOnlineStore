@@ -10,10 +10,12 @@
             {% for product in products %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ product.photo|media_filter }}" alt="{{ product.name }}" class="img-thumbnail">
+                    <img src="{{ product.image|media_filter }}" alt="{{ product.name }}" class="img-thumbnail">
                     <div class="card-body">
                         <p class="card-text">{{ product.name }}</p>
-                        <p class="card-text">Описание: {{ product.description|truncatechars:100 }}</p>
+                        <p class="card-text">
+                            Описание: {{ product.description|truncatechars:100|default:"Описание отсутствует" }}
+                        </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-center mb-2">
                                 <a class="p-2 btn btn-outline-primary"
@@ -36,27 +38,31 @@
             <nav>
                 <ul class="pagination">
                     {% if products.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ products.previous_page_number }}">Назад</a>
-                        </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}">Назад</a>
+                    </li>
                     {% endif %}
 
                     {% for num in products.paginator.page_range %}
-                        <li class="page-item {% if products.number == num %}active{% endif %}">
-                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                        </li>
+                    <li class="page-item {% if products.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
                     {% endfor %}
 
                     {% if products.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ products.next_page_number }}">Вперёд</a>
-                        </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}">Вперёд</a>
+                    </li>
                     {% endif %}
                 </ul>
             </nav>
         </div>
         {% endif %}
-
+        <div class="d-flex justify-content-center mb-2 mt-3">
+            <a class="p-2 btn btn-outline-primary"
+               href="{% url 'catalog:add_product' %}"
+               style="width: 300px;">Добавить товар на полку</a>
+        </div>
     </div>
 </div>
 {% endblock %}
