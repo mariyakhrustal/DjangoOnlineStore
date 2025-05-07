@@ -1,4 +1,5 @@
 {% extends 'catalog/base.html' %}
+{% load my_tags %}
 {% block title %}Детали продукта{% endblock %}
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
@@ -6,7 +7,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="img-thumbnail">
+                    <img src="{{ product.photo|media_filter }}" alt="{{ product.name }}" class="img-thumbnail">
                     <div class="card-body">
                         <p class="card-text">{{ product.name }}</p>
                         <p class="card-text">Категория товара: {{ product.category }}</p>
