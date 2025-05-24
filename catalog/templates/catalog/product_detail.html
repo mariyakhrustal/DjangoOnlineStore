@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block title %}Детали продукта{% endblock %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ product.image|media_filter }}" alt="{{ product.name }}" class="img-thumbnail">
+                    <div class="card-body">
+                        <p class="card-text">{{ product.name }}</p>
+                        <p class="card-text">Категория товара: {{ product.category }}</p>
+                        <p class="card-text">Описание: {{ product.description|default:"Описание отсутствует" }}</p>
+                        <p class="card-text">Цена: {{ product.price }} р.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-column align-items-center mb-2">
+                                <div class="btn-group">
+                                    <a class="p-2 btn btn-outline-primary" href="#">Редактировать</a>
+                                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}"
+                                       style="width: 80px;">Назад</a>
+                                </div>
+                            </div>
+                            <small class="text-body-secondary">Добавлено: {{ product.created_at|date:"d M Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

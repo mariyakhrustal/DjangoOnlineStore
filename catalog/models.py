@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 # Create your models here.
@@ -90,3 +91,9 @@ class Contacts(models.Model):
 
     def __str__(self):
         return f"Контакт: {self.name}"
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "description", "image", "category", "price"]
