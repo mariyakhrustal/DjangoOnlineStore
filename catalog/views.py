@@ -1,48 +1,53 @@
-from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render
 from django.http import HttpResponse
-from catalog.models import Product, Contacts, ProductForm
+from catalog.models import Product, Contacts
 
 
 # Create your views here.
-def home(request):
-    all_products = Product.objects.order_by("-id")
-    paginator = Paginator(all_products, 3)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+class CatalogListView(ListView):
+    model = Product
+    ordering = ["-id"]
+    paginate_by = 3
     last_products = Product.objects.order_by("-id")[:5]
     print("Последние 5 созданных продуктов:")
     for product in last_products:
         print(f"{product.name}")
-    context = {"products": page_obj}
-    return render(request, "catalog/home.html", context)
 
 
-def contacts(request):
-    if request.method == "POST":
+class ContactsView(View):
+    def get_contacts(self):
+        return Contacts.objects.order_by("-id")[:5]
+
+    def get(self, request):
+        return render(request, "catalog/contacts.html", {"contacts": self.get_contacts()})
+
+    def post(self, request):
         name = request.POST.get("name")
         phone = request.POST.get("phone")
         message = request.POST.get("message")
-
         Contacts.objects.create(name=name, phone=phone, message=message)
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    last_contacts = Contacts.objects.order_by("-id")[:5]
-    return render(request, "catalog/contacts.html", {"contacts": last_contacts})
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "catalog/product_detail.html", context)
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def add_product(request):
-    if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            product = form.save()
-            # Перенаправление на страницу товара по его pk
-            return redirect("catalog:product_detail", pk=product.pk)
-    else:
-        form = ProductForm()
-    return render(request, "catalog/add_product.html", {"form": form})
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ("name", "category", "description", "image", "price")
+    success_url = reverse_lazy("catalog:home")
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ("name", "category", "description", "image", "price")
+    success_url = reverse_lazy("catalog:home")
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy("catalog:home")
