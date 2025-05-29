@@ -1,4 +1,6 @@
 from django.urls import reverse_lazy, reverse
+from django.core.mail import send_mail
+from django.conf import settings
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from my_blog.models import Blog
 
@@ -24,7 +26,18 @@ class MyBlogDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         obj.view_count += 1
-        obj.save(update_fields=['view_count'])  # сохраняем только поле views
+        if obj.view_count >= 100 and not obj.is_congratulated:
+            # Отправка письма
+            send_mail(
+                subject='Ура! 100 просмотров!',
+                message=f'Ваша статья "{obj.title}" набрала 100 просмотров!',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['your_email@example.com'],  # сюда введи свою почту
+                fail_silently=False,
+            )
+            obj.is_congratulated = True
+
+        obj.save(update_fields=['view_count', 'is_congratulated'])  # сохраняем только поле views
         return obj
 
 class MyBlogCreateView(CreateView):

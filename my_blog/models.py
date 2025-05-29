@@ -22,6 +22,7 @@ class Blog(models.Model):
         auto_now_add=True,
         verbose_name="Дата создания",
     )
+    is_congratulated = models.BooleanField(default=False, verbose_name="Отправлено поздравительное письмо")
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
     view_count = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров")
 
