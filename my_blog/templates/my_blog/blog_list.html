@@ -1,0 +1,67 @@
+{% extends 'my_blog/base.html' %}
+{% load blog_tags %}
+{% block title %}Блог{% endblock %}
+{% block content %}
+{% if object_list %}
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+    <div class="col-lg-6 px-0">
+        <h1 class="display-4 fst-italic">{{ newest_post.title }}</h1>
+        <strong class="d-inline-block mb-2 text-primary-emphasis">Самая последняя запись!!!</strong>
+        <p class="lead my-3">{{ newest_post.content|truncatechars:100 }}</p>
+        <p class="lead mb-0"><a href="{% url 'my_blog:blogs_detail' newest_post.pk %}"
+                                class="text-body-emphasis fw-bold">Продолжить чтение...</a></p>
+        <div class="d-flex justify-content-start align-items-center text-muted mt-auto pt-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="me-1" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4a4 4 0 1 1 0-8
+                     4 4 0 0 1 0 8zm0-1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+            <small>{{ newest_post.view_count }}</small>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'my_blog:blogs_create' %}" class="btn btn-lg btn-outline-primary my-3">Создать новую запись</a>
+<hr>
+<h3 class="mb-3">Все записи</h3>
+<div class="row mb-2">
+    <div class="col-lg-8">
+        {% for post in object_list %}
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h3 class="mb-0">{{ post.title }}</h3>
+                <div class="mb-2 mt-3 text-body-secondary">Дата публикации: {{ post.created_at|date:"d M Y" }}</div>
+                <p class="card-text mb-auto">{{ post.content|truncatechars:100 }}</p>
+                <a href="{% url 'my_blog:blogs_detail' post.pk %}"
+                   class="icon-link gap-1 icon-link-hover stretched-link">
+                    Продолжить чтение...
+                </a>
+                <div class="d-flex justify-content-end align-items-center text-muted mt-auto pt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="me-1" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4a4 4 0 1 1 0-8
+                     4 4 0 0 1 0 8zm0-1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    <small>{{ post.view_count }}</small>
+                </div>
+            </div>
+            {% if post.preview_image %}
+            <div class="col-auto d-none d-lg-block">
+                <img src="{{ post.preview_image|blogs_media_filter }}"
+                     alt="{{ post.title }}" class="img-thumbnail"
+                     height="250" width="200">
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-lg-4">
+        {% include 'my_blog/includes/inc_sidebar.html' %}
+    </div>
+</div>
+{% include 'my_blog/includes/inc_pagination.html' %}
+
+{% else %}
+<p>Постов еще нет</p>
+{% endif %}
+{% endblock%}

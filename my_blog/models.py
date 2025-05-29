@@ -1,15 +1,15 @@
 from django.db import models
 
 # Create your models here.
-class BlogPost(models.Model):
+class Blog(models.Model):
     title = models.CharField(
         max_length=250,
         verbose_name="Заголовок",
         help_text="Введите заголовок блоговой записи",
     )
     content = models.TextField(
-        verbose_name="Описание",
-        help_text="Введите описание блоговой записи",
+        verbose_name="Контент",
+        help_text="Введите контент для блоговой записи",
     )
     preview_image = models.ImageField(
         upload_to="preview_image/",
