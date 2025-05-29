@@ -28,7 +28,7 @@
     <div class="col-lg-8">
         {% for post in object_list %}
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
+            <div class="col p-4 d-flex flex-column justify-content-between">
                 <h3 class="mb-0">{{ post.title }}</h3>
                 <div class="mb-2 mt-3 text-body-secondary">Дата публикации: {{ post.created_at|date:"d M Y" }}</div>
                 <p class="card-text mb-auto">{{ post.content|truncatechars:100 }}</p>
@@ -36,7 +36,7 @@
                    class="icon-link gap-1 icon-link-hover stretched-link">
                     Продолжить чтение...
                 </a>
-                <div class="d-flex justify-content-end align-items-center text-muted mt-auto pt-3">
+                <div class="d-flex align-items-center text-muted mt-auto pt-3 w-100 text-end">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="me-1" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4a4 4 0 1 1 0-8

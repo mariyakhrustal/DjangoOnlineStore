@@ -179,3 +179,4 @@ cython_debug/
 
 # media data
 media/photo/
+media/preview_image/

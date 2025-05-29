@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from my_blog.models import Blog
 
@@ -12,6 +12,10 @@ class MyBlogListView(ListView):
         context = super().get_context_data(**kwargs)
         context['newest_post'] = self.object_list.first()
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(is_published=True)
+        return queryset
 
 
 class MyBlogDetailView(DetailView):
@@ -33,6 +37,9 @@ class MyBlogUpdateView(UpdateView):
     model = Blog
     fields = ("title", "content", "preview_image", "is_published")
     success_url = reverse_lazy("my_blog:blogs")
+
+    def get_success_url(self):
+        return reverse("my_blog:blogs_detail", args=[self.kwargs.get('pk')])
 
 
 class MyBlogDeleteView(DeleteView):
