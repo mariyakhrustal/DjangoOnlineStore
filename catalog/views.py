@@ -9,12 +9,8 @@ from catalog.models import Product, Contacts
 # Create your views here.
 class CatalogListView(ListView):
     model = Product
-    last_products = Product.objects.order_by("-id")[:5]
-    print("Последние 5 созданных продуктов:")
-    for product in last_products:
-        print(f"{product.name}")
     ordering = ["-id"]
-    paginate_by = 3
+    paginate_by = 10
 
 
 class ContactsView(View):
