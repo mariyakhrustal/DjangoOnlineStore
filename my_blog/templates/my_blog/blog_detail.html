@@ -1,0 +1,49 @@
+{% extends 'my_blog/base.html' %}
+{% load blog_tags %}
+{% block title %}Блоговая запись{% endblock %}
+{% block content %}
+<div class="row g-5">
+    <div class="col-md-12">
+        <article class="blog-post">
+            <!-- Заголовок поста -->
+            <h2 class="display-5 link-body-emphasis mb-3">{{ object.title }}</h2>
+            <!-- Дата и просмотры -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="mb-0 text-muted">{{ object.created_at|date:"M d, Y" }}</p>
+                <div class="d-flex align-items-center text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                         fill="currentColor" class="me-1" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4a4 4 0 1 1 0-8
+                                 4 4 0 0 1 0 8zm0-1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    <small>{{ object.view_count }}</small>
+                </div>
+            </div>
+            <hr>
+            <!-- Контент и изображение -->
+            <div class="row">
+                <div class="col-md-8">
+                    <p>{{ object.content }}</p>
+                </div>
+                {% if object.preview_image %}
+                <div class="col-md-4">
+                    <img src="{{ object.preview_image|blogs_media_filter }}"
+                         alt="{{ object.title }}" class="img-thumbnail"
+                         height="250" width="200">
+                </div>
+                {% endif %}
+            </div>
+        </article>
+        <!-- Кнопки управления -->
+        <div class="row mt-5">
+            <div class="col d-flex justify-content-start">
+                <a class="btn btn-md btn-outline-primary me-3" href="{% url 'my_blog:blogs' %}">На главную</a>
+                <a class="btn btn-md btn-outline-secondary" href="{% url 'my_blog:blogs_update' object.pk %}">Редактировать</a>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <a class="btn btn-md btn-outline-danger" href="{% url 'my_blog:blogs_delete' object.pk %}">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

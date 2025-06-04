@@ -1,0 +1,33 @@
+{% extends 'my_blog/base.html' %}
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="row">
+        <div class="col">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card border-0 shadow-lg" style="background-color: #fdfdfd;">
+                    <div class="card-header bg-light text-center">
+                        {% if object %}
+                        <h4 class="mb-2">Редактировать запись</h4>
+                        {% else %}
+                        <h4 class="mb-2">Добавить запись</h4>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-4">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="p-2 btn btn-outline-primary" style="width: 200px;">
+                            {% if object %}
+                            Сохранить
+                            {% else %}
+                            Добавить
+                            {% endif %}
+                        </button>
+                        <a class="p-2 btn btn-outline-primary" href="{% url 'my_blog:blogs' %}"
+                                       style="width: 200px;">Отмена</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
