@@ -64,8 +64,13 @@ class ProductForm(StyleFormMixin, ModelForm):
             if image.size > 5 * 1024 * 1024:
                 raise ValidationError("Размер изображения не должен превышать 5 МБ.")
 
-            valid_mime_types = ['image/jpeg', 'image/png']
-            if hasattr(image, 'content_type') and image.content_type not in valid_mime_types:
-                raise ValidationError("Разрешены только изображения форматов JPEG и PNG.")
+            valid_mime_types = ["image/jpeg", "image/png"]
+            if (
+                hasattr(image, "content_type")
+                and image.content_type not in valid_mime_types
+            ):
+                raise ValidationError(
+                    "Разрешены только изображения форматов JPEG и PNG."
+                )
 
         return image
