@@ -36,3 +36,12 @@ class ProductForm(ModelForm):
             if word.lower() in description.lower():
                 raise ValidationError(f'Недопустимое слово в описании продукта: "{word}".')
         return description
+
+
+    def clean_price(self):
+        price = self.cleaned_data.get("price")
+        if price < 0:
+            raise ValidationError("Цена не может быть отрицательной.")
+        elif price == 0:
+            raise ValidationError("Проверьте цену продукта.")
+        return price
