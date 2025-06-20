@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(
@@ -22,15 +23,18 @@ class Blog(models.Model):
         auto_now_add=True,
         verbose_name="Дата создания",
     )
-    is_congratulated = models.BooleanField(default=False, verbose_name="Отправлено поздравительное письмо")
+    is_congratulated = models.BooleanField(
+        default=False, verbose_name="Отправлено поздравительное письмо"
+    )
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
-    view_count = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров")
-
+    view_count = models.PositiveIntegerField(
+        default=0, verbose_name="Количество просмотров"
+    )
 
     class Meta:
         verbose_name = "Блоговая запись"
         verbose_name_plural = "Блоговые записи"
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.title

@@ -1,9 +1,16 @@
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from django.shortcuts import render
 from django.http import HttpResponse
 from catalog.models import Product, Contacts
+from catalog.forms import ProductForm
 
 
 # Create your views here.
@@ -18,7 +25,9 @@ class ContactsView(View):
         return Contacts.objects.order_by("-id")[:5]
 
     def get(self, request):
-        return render(request, "catalog/contacts.html", {"contacts": self.get_contacts()})
+        return render(
+            request, "catalog/contacts.html", {"contacts": self.get_contacts()}
+        )
 
     def post(self, request):
         name = request.POST.get("name")
@@ -34,13 +43,13 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ("name", "category", "description", "image", "price")
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:home")
 
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ("name", "category", "description", "image", "price")
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:home")
 
 
