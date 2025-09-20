@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "my_blog",
+    "users",
+    "phonenumber_field",
+    "django_countries",
 ]
 
 MIDDLEWARE = [
@@ -120,3 +123,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'admin@example.com'
+
+AUTH_USER_MODEL = "users.User"

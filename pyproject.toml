@@ -13,6 +13,8 @@ python-dotenv = "^1.1.0"
 black = "^25.1.0"
 pillow = "^11.2.1"
 ipython = "^9.1.0"
+django-countries = "^7.6.1"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
 
 
 [build-system]
