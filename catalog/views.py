@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
@@ -12,7 +13,6 @@ from django.http import HttpResponse
 from catalog.models import Product, Contacts
 
 
-# Create your views here.
 class CatalogListView(ListView):
     model = Product
     ordering = ["-id"]
@@ -36,22 +36,22 @@ class ContactsView(View):
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreateView(CreateView):
-    model = Product
-    fields = ("name", "category", "description", "image", "price")
-    success_url = reverse_lazy("catalog:home")
-
-
-class ProductUpdateView(UpdateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     fields = ("name", "category", "description", "image", "price")
     success_url = reverse_lazy("catalog:home")
 
 
-class ProductDeleteView(DeleteView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    fields = ("name", "category", "description", "image", "price")
+    success_url = reverse_lazy("catalog:home")
+
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:home")
