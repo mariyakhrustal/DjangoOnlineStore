@@ -11,6 +11,7 @@ from django.views.generic import (
 from django.shortcuts import render
 from django.http import HttpResponse
 from catalog.models import Product, Contacts
+from catalog.forms import ProductForm
 
 
 class CatalogListView(ListView):
@@ -42,13 +43,13 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    fields = ("name", "category", "description", "image", "price")
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:home")
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    fields = ("name", "category", "description", "image", "price")
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:home")
 
 
