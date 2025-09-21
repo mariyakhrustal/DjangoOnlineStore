@@ -1,0 +1,17 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container mt-4 d-flex justify-content-center align-items-center">
+    <div class="card shadow-sm p-4" style="max-width: 800px; width: 100%;">
+        <h2 class="text-center">Редактировать профиль</h2>
+        <form method="post" enctype="multipart/form-data" class="mt-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+        <div class="text-center">
+            <a href="{% url 'users:profile' %}" class="btn btn-primary m-4" style="width: 200px;">Назад</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

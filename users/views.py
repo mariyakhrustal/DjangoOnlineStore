@@ -1,10 +1,11 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DetailView
 
 from config.settings import DEFAULT_FROM_EMAIL
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 
 
@@ -25,3 +26,19 @@ class UserCreateView(CreateView):
         from_email = DEFAULT_FROM_EMAIL
         recipient_list = [user_email]
         send_mail(subject, message, from_email, recipient_list)
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "users/profile.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserProfileForm
+    template_name = "users/profile_edit.html"
+    success_url = reverse_lazy("users:profile")  # после сохранения вернёт на страницу профиля
+
+    def get_object(self, queryset=None):
+        return self.request.user  # редактируем только свой профиль
