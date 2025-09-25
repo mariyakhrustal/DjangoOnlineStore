@@ -1,7 +1,34 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Juicy Corner</h5>
-    <nav class="ms-5">
-        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow gap-2">
+    <h5 class="my-0 mr-md-auto font-weight-normal text-nowrap">Juicy Corner</h5>
+    <nav class="d-flex flex-row w-100 justify-content-between align-items-center">
+        <div class="d-flex gap-2">
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+        </div>
+        <div class="d-flex gap-2">
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                   id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- Если у пользователя есть аватар, показываем его, иначе заглушку -->
+                    {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="{{ user.email }}" width="50" height="50"
+                         class="rounded-circle">
+                    {% else %}
+                    <i class="bi bi-person-circle" style="font-size: 40px; color: gray;"></i>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser">
+                    <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Настройки</a></li>
+                </ul>
+                <a class="p-2 btn btn-outline-primary m-3" href="{% url 'users:logout' %}" style="width: 80px;">Выйти</a>
+            </div>
+            {% else %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Вход</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+            {% endif %}
+        </div>
     </nav>
 </div>

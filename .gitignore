@@ -178,5 +178,5 @@ cython_debug/
 *.sqlite3
 
 # media data
-media/photo/
-media/preview_image/
+/media/*
+!/media/.gitkeep
