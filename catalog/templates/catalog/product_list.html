@@ -5,14 +5,18 @@
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for product in object_list %}
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ product.image|media_filter }}" alt="{{ product.name }}" class="img-thumbnail">
+                    <figure class="text-center">
+                        <img src="{{ product.image|media_filter }}"
+                             alt="{{ product.name }}"
+                             class="img-thumbnail d-flex justify-content-start"
+                             style="width: 500px; height: 250px; object-fit: cover;">
+                        <figcaption class="mt-2 fs-4">{{ product.name }}</figcaption>
+                    </figure>
                     <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
                         <p class="card-text">
                             Описание: {{ product.description|truncatechars:100|default:"Описание отсутствует" }}
                         </p>
@@ -58,12 +62,13 @@
             </nav>
         </div>
         {% endif %}
-
+        {% if user.is_authenticated %}
         <div class="d-flex justify-content-center mb-2 mt-3">
             <a class="p-2 btn btn-outline-primary"
                href="{% url 'catalog:add_product' %}"
                style="width: 300px;">Добавить товар на полку</a>
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

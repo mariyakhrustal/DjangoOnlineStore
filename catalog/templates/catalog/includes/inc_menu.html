@@ -21,6 +21,8 @@
                 <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser">
                     <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
                     <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'users:profile' %}">Мои черновики</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Настройки</a></li>
                 </ul>
                 <a class="p-2 btn btn-outline-primary m-3" href="{% url 'users:logout' %}" style="width: 80px;">Выйти</a>
