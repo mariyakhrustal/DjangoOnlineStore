@@ -27,6 +27,7 @@ class UserCreateView(CreateView):
         recipient_list = [user_email]
         send_mail(subject, message, from_email, recipient_list)
 
+
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "users/profile.html"
@@ -34,11 +35,14 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         return self.request.user
 
+
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = "users/profile_edit.html"
-    success_url = reverse_lazy("users:profile")  # после сохранения вернёт на страницу профиля
+    success_url = reverse_lazy(
+        "users:profile"
+    )  # после сохранения вернёт на страницу профиля
 
     def get_object(self, queryset=None):
         return self.request.user  # редактируем только свой профиль

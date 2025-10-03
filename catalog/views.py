@@ -15,13 +15,27 @@ from catalog.models import Product, Contacts
 from catalog.forms import ProductForm, ProductModeratorForm
 
 
+class DraftListView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = "catalog/product_drafts.html"
+    context_object_name = "products"
+    paginate_by = 9
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.has_perm("catalog.can_unpublish_product"):
+            return Product.objects.filter(status="draft").order_by("-created_at")
+        return Product.objects.filter(status="draft", owner=user).order_by(
+            "-created_at"
+        )
+
+
 class CatalogListView(ListView):
     model = Product
-    ordering = ["-id"]
     paginate_by = 6
 
     def get_queryset(self):
-        return Product.objects.filter(status="published")
+        return Product.objects.filter(status="published").order_by("-created_at")
 
 
 class ContactsView(View):

@@ -39,15 +39,21 @@ class Product(models.Model):
         verbose_name="Цена",
         help_text="Введите цену товара",
     )
-    owner = models.ForeignKey(User,
-                              verbose_name="Владелец",
-                              help_text="Укажите владельца товара",
-                              null=True,
-                              blank=True,
-                              on_delete=models.CASCADE,
-                              related_name="products",
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Владелец",
+        help_text="Укажите владельца товара",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="products",
     )
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default="draft", verbose_name="Статус публикации")
+    status = models.CharField(
+        max_length=50,
+        choices=STATUS_CHOICES,
+        default="draft",
+        verbose_name="Статус публикации",
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
