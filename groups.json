@@ -378,5 +378,17 @@
         27
       ]
     }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "content_manager",
+      "permissions": [
+        33,
+        34,
+        35
+      ]
+    }
   }
 ]

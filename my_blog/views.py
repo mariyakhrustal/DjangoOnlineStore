@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.core.mail import send_mail
 from django.conf import settings
@@ -50,21 +50,24 @@ class MyBlogDetailView(LoginRequiredMixin, DetailView):
         return obj
 
 
-class MyBlogCreateView(LoginRequiredMixin, CreateView):
+class MyBlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Blog
     fields = ("title", "content", "preview_image", "is_published")
     success_url = reverse_lazy("my_blog:blogs")
+    permission_required = "my_blog.add_blog"
 
 
-class MyBlogUpdateView(LoginRequiredMixin, UpdateView):
+class MyBlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Blog
     fields = ("title", "content", "preview_image", "is_published")
     success_url = reverse_lazy("my_blog:blogs")
+    permission_required = "my_blog.change_blog"
 
     def get_success_url(self):
         return reverse("my_blog:blogs_detail", args=[self.kwargs.get("pk")])
 
 
-class MyBlogDeleteView(LoginRequiredMixin, DeleteView):
+class MyBlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("my_blog:blogs")
+    permission_required = "my_blog.delete_blog"

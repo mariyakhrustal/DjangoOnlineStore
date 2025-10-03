@@ -38,10 +38,14 @@
         <div class="row mt-5">
             <div class="col d-flex justify-content-start">
                 <a class="btn btn-md btn-outline-primary me-3" href="{% url 'my_blog:blogs' %}">На главную</a>
+                {% if perms.my_blog.change_blog %}
                 <a class="btn btn-md btn-outline-secondary" href="{% url 'my_blog:blogs_update' object.pk %}">Редактировать</a>
+                {% endif %}
             </div>
             <div class="col d-flex justify-content-end">
+                {% if perms.my_blog.delete_blog %}
                 <a class="btn btn-md btn-outline-danger" href="{% url 'my_blog:blogs_delete' object.pk %}">Удалить</a>
+                {% endif %}
             </div>
         </div>
     </div>
