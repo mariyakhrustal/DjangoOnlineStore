@@ -4,6 +4,7 @@
         <div class="d-flex gap-2">
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'my_blog:blogs' %}">Наш блог</a>
         </div>
         <div class="d-flex gap-2">
             {% if user.is_authenticated %}

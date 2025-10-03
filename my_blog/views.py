@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.core.mail import send_mail
 from django.conf import settings
@@ -11,7 +12,6 @@ from django.views.generic import (
 from my_blog.models import Blog
 
 
-# Create your views here.
 class MyBlogListView(ListView):
     model = Blog
     ordering = ["-created_at"]
@@ -27,7 +27,7 @@ class MyBlogListView(ListView):
         return queryset
 
 
-class MyBlogDetailView(DetailView):
+class MyBlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
@@ -50,13 +50,13 @@ class MyBlogDetailView(DetailView):
         return obj
 
 
-class MyBlogCreateView(CreateView):
+class MyBlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     fields = ("title", "content", "preview_image", "is_published")
     success_url = reverse_lazy("my_blog:blogs")
 
 
-class MyBlogUpdateView(UpdateView):
+class MyBlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ("title", "content", "preview_image", "is_published")
     success_url = reverse_lazy("my_blog:blogs")
@@ -65,6 +65,6 @@ class MyBlogUpdateView(UpdateView):
         return reverse("my_blog:blogs_detail", args=[self.kwargs.get("pk")])
 
 
-class MyBlogDeleteView(DeleteView):
+class MyBlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy("my_blog:blogs")
