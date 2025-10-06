@@ -7,32 +7,41 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ object.image|media_filter }}" alt="{{ object.name }}" class="img-thumbnail">
+                    <figure class="text-center">
+                        <img src="{{ product.image|media_filter }}"
+                             alt="{{ product.name }}"
+                             class="img-thumbnail"
+                             style="width: 500px; height: 250px; object-fit: cover;">
+                        <figcaption class="mt-2 fs-4">{{ product.name }}</figcaption>
+                    </figure>
                     <div class="card-body">
-                        <p class="card-text">{{ object.name }}</p>
                         <p class="card-text">Категория товара: {{ object.category }}</p>
                         <p class="card-text">Описание: {{ object.description|default:"Описание отсутствует" }}</p>
                         <p class="card-text">Цена: {{ object.price }} р.</p>
                         <div class="d-flex justify-content-between align-items-center">
+                            {% if perms.catalog.can_unpublish_product or user == object.owner %}
                             <div class="d-flex flex-column align-items-center mb-2">
                                 <div class="btn-group">
-                                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_update' object.pk %}">
+                                    <a class="p-2 btn btn-outline-primary"
+                                       href="{% url 'catalog:product_update' object.pk %}">
                                         Редактировать
                                     </a>
-                                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_delete' object.pk %}">
+                                    <a class="p-2 btn btn-outline-primary"
+                                       href="{% url 'catalog:product_delete' object.pk %}">
                                         Удалить
                                     </a>
                                 </div>
-                                <div class="btn-group mt-2">
-                                    <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}"
-                                       style="width: 200px;">Назад</a>
-                                </div>
                             </div>
+                            {% endif %}
                             <small class="text-body-secondary">Добавлено: {{ object.created_at|date:"d M Y" }}</small>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-2">
+            <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}"
+               style="width: 200px;">Назад</a>
         </div>
     </div>
 </div>

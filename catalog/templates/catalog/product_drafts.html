@@ -1,6 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
-{% block title %}Главная страница{% endblock %}
+{% block title %}Черновики{% endblock %}
 
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
@@ -32,21 +32,12 @@
                 </div>
             </div>
             {% empty %}
-            <p class="text-center fs-4 mt-4">Нет доступных товаров.</p>
+            <p class="text-center fs-4 mt-4">Черновиков нет.</p>
             {% endfor %}
         </div>
-
-        {% if user.is_authenticated %}
-        <div class="d-flex justify-content-center mb-5 mt-5">
-            <a class="p-2 btn btn-outline-primary"
-               href="{% url 'catalog:add_product' %}"
-               style="width: 300px;">Добавить товар на полку</a>
-        </div>
-        {% endif %}
-
         <!-- Пагинация -->
         {% include 'catalog/includes/inc_pagination.html' %}
-
     </div>
 </div>
 {% endblock %}
+

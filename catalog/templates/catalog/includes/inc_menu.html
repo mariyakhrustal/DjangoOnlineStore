@@ -4,6 +4,7 @@
         <div class="d-flex gap-2">
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
             <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'my_blog:blogs' %}">Наш блог</a>
         </div>
         <div class="d-flex gap-2">
             {% if user.is_authenticated %}
@@ -20,6 +21,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser">
                     <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'catalog:product_drafts' %}">Черновики</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Настройки</a></li>
                 </ul>

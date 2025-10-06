@@ -1,9 +1,15 @@
 from django.db import models
 from django import forms
 
+from users.models import User
 
-# Create your models here.
+
 class Product(models.Model):
+    STATUS_CHOICES = [
+        ("draft", "Черновик"),
+        ("published", "Опубликован"),
+    ]
+
     name = models.CharField(
         max_length=150,
         verbose_name="Наименование",
@@ -33,6 +39,21 @@ class Product(models.Model):
         verbose_name="Цена",
         help_text="Введите цену товара",
     )
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Владелец",
+        help_text="Укажите владельца товара",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="products",
+    )
+    status = models.CharField(
+        max_length=50,
+        choices=STATUS_CHOICES,
+        default="draft",
+        verbose_name="Статус публикации",
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
@@ -41,6 +62,9 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
 
     def __str__(self):
         return self.name
