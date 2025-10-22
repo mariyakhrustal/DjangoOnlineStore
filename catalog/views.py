@@ -9,10 +9,28 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from catalog.models import Product, Contacts
+from catalog.models import Product, Contacts, Category
 from catalog.forms import ProductForm, ProductModeratorForm
+from catalog.services import get_products_by_category, get_all_cached_products
+
+
+class CategoryProductsView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = "catalog/category_products.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        category_id = self.kwargs["category_id"]
+        return get_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs["category_id"]
+        context["categories"] = Category.objects.all()
+        context["current_category"] = get_object_or_404(Category, id=category_id)
+        return context
 
 
 class DraftListView(LoginRequiredMixin, ListView):
@@ -33,9 +51,16 @@ class DraftListView(LoginRequiredMixin, ListView):
 class CatalogListView(ListView):
     model = Product
     paginate_by = 6
+    template_name = "catalog/product_list.html"
+    context_object_name = "products"
 
     def get_queryset(self):
-        return Product.objects.filter(status="published").order_by("-created_at")
+        return get_all_cached_products()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 class ContactsView(View):
